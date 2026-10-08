@@ -10,9 +10,8 @@ type Props = {
 
 export const PeopleTable: React.FC<Props> = ({ people }) => {
   const { slug: selectedSlug } = useParams<{ slug?: string }>();
-
-  // Створюємо Map для швидкого пошуку батьків за ім'ям
   const peopleByName = new Map<string, Person>();
+
   people.forEach(person => peopleByName.set(person.name, person));
 
   return (
@@ -34,8 +33,12 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
       <tbody>
         {people.map(person => {
           const isSelected = person.slug === selectedSlug;
-          const mother = person.motherName ? peopleByName.get(person.motherName) : null;
-          const father = person.fatherName ? peopleByName.get(person.fatherName) : null;
+          const mother = person.motherName
+            ? peopleByName.get(person.motherName)
+            : null;
+          const father = person.fatherName
+            ? peopleByName.get(person.fatherName)
+            : null;
 
           return (
             <tr
@@ -51,14 +54,22 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
               <td>{person.died}</td>
               <td>
                 {person.motherName ? (
-                  mother ? <PersonLink person={mother} /> : person.motherName
+                  mother ? (
+                    <PersonLink person={mother} />
+                  ) : (
+                    person.motherName
+                  )
                 ) : (
                   '-'
                 )}
               </td>
               <td>
                 {person.fatherName ? (
-                  father ? <PersonLink person={father} /> : person.fatherName
+                  father ? (
+                    <PersonLink person={father} />
+                  ) : (
+                    person.fatherName
+                  )
                 ) : (
                   '-'
                 )}
